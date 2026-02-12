@@ -24,4 +24,5 @@ On cherche à comprendre **l’évolution du nombre de robots sur chaque planèt
 - **Permettre** une configuration flexible du nombre de planètes et de leurs connexions.
 
 ## Ressources et Liens
-- [Maths en Jeans](https://www.mathsenjeans.fr)
+- [Maths en Jeans](https://www.mathenjeans.fr/)
+- [Lycée Colbert](https://www.lyceecolbert-tg.org/)
