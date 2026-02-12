@@ -15,35 +15,14 @@ def robot_planete(nb_planetes:int ,nb_robot:int , nb_tour: int) -> list :
         y = y +1
         print(res)
         print(y)
-        while ( y != nb_robot) :
+    while ( y != nb_robot) :
             res.append(1)
             y = y +1   
             print(res)
             print(y)
-    elif  (nb_robot >= 1) and (nb_robot <= nb_planetes) :
-        x = y 
-        while ( x != nb_robot ) :
-                res.append(1)
-                x = x+1
-                y = y + 1
-                print(res)
-                print(x)
-        while ( x <= y ) :
-                res.append(0)
-                x = x+1
-                
-                print(res)
-                print(x) 
-    elif ( x <= nb_planetes ) or (y <= nb_planetes) :
-            res.append(0)
-            x = x + 1
-            y = +1
-            print(res)
-            print(x)
-            print(y)
-    if len(res)+1 > nb_planetes :
-        res.remove( res[-1] )
-    
+
+    if len(res) < nb_planetes:
+        res.append(0)
         print(res)
         
     while ( z < nb_tour ) :
@@ -54,5 +33,5 @@ def robot_planete(nb_planetes:int ,nb_robot:int , nb_tour: int) -> list :
             res1.append(a-elt)
         res = res1
         res1 = []
-    return res 
-
+    print(sum(res))
+    return res
