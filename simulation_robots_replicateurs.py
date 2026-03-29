@@ -34,49 +34,39 @@ def robot_planete(nb_planetes:int ,nb_robot:int , nb_tour: int) -> list :
     #print(sum(res))
     return res 
 
-def type_suite(nb_planete:int,nb_robot:int) -> str :
-    nb_tour2  = 0
+def type_suite(nb_planete: int, nb_robot: int) -> str:
+    nb_tour2 = 0
     while nb_tour2 <= 10:
-        nb_tour2 = nb_tour2+1
-        if sum(robot_planete(nb_planete,nb_robot,nb_tour2))== sum(robot_planete(nb_planete,nb_robot,nb_tour2-1)*(nb_planete-1)) :
-            res = "suite géometrique"
-        elif sum(robot_planete(nb_planete,nb_robot,nb_tour2))== sum(robot_planete(nb_planete,nb_robot,nb_tour2-1)) + sum(robot_planete(nb_planete,nb_robot,nb_tour2-2)) :
-            res= " suite de fibonacci"
-        elif sum(robot_planete(nb_planete,nb_robot,nb_tour2))== sum(robot_planete(nb_planete,nb_robot,nb_tour2-1)):
-            res = "suite constante"
-        else :
-            res = "suite à rechercher"
-        
-    return  res
+        nb_tour2 += 1
+        current_sum = sum(robot_planete(nb_planete, nb_robot, nb_tour2))
+        prev_sum = sum(robot_planete(nb_planete, nb_robot, nb_tour2-1))
+        prev_prev_sum = sum(robot_planete(nb_planete, nb_robot, nb_tour2-2))
+
+        if current_sum == prev_sum * (nb_planete - 1):
+            return "suite géometrique"
+        elif current_sum == prev_sum + prev_prev_sum:
+            return "suite de fibonacci"
+        elif current_sum == prev_sum:
+            return "suite constante"
+    return "suite à rechercher"
 
 def boucle_test(nb_tour) :
     res = []
     x = 0
     y = 0
     a = 0
-    while a != nb_tour :
-        x = randint(0,100)
-        y = randint(0,100)
-        a = a +1
-        if type_suite(x,y)== "suite à rechercher" :
-            res.append(x)
-            res.append(y)
-            res.append("suite à rechercher")
-            print(res)
-        if type_suite(x,y)== "suite géometrique" :
-            res.append(x)
-            res.append(y)
-            res.append("suite géometrique")
-            print(res)
-        if type_suite(x,y)== "suite de fibonacci" :
-            res.append(x)
-            res.append(y)
-            res.append("suite de fibonacci")
-            print(res)
-        if type_suite(x,y)== "suite constante" :
-            res.append(x)
-            res.append(y)
-            res.append("suite constante")
-            print(res)
-    return  res 
-            
+    actions = {
+        "suite à rechercher": lambda: res.extend([x, y, "suite à rechercher"]),
+        "suite géometrique": lambda: res.extend([x, y, "suite géometrique"]),
+        "suite de fibonacci": lambda: res.extend([x, y, "suite de fibonacci"]),
+        "suite constante": lambda: res.extend([x, y, "suite constante"])
+    }
+    while a != nb_tour:
+        x = randint(0, 100)
+        y = randint(0, 100)
+        a += 1
+        suite_type = type_suite(x, y)
+        if suite_type in actions:
+            actions[suite_type]()
+            print(res[-3:])  # Affiche uniquement les trois derniers éléments ajoutés
+    return res
