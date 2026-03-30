@@ -1,5 +1,5 @@
 from random import randint
-def robot_planete(nb_planetes: int, nb_robots_initiaux: int, nb_siecles: int) -> list:
+def robots_replicateurs(nb_planetes: int, nb_robots_initiaux: int, nb_siecles: int) -> list:
     """
     Simule la répartition des robots sur chaque planète de la galaxie au fil des siècles.        list: Une liste représentant le nombre de robots sur chaque planète après `nb_siecles`.
     """
@@ -33,9 +33,9 @@ def robot_planete(nb_planetes: int, nb_robots_initiaux: int, nb_siecles: int) ->
 def type_suite(nb_planete: int, nb_robot: int) -> str:
     nb_tour2 = 0
     for nb_tour2 in range(1, 11):
-        current_sum = sum(robot_planete(nb_planete, nb_robot, nb_tour2))
-        prev_sum = sum(robot_planete(nb_planete, nb_robot, nb_tour2-1))
-        prev_prev_sum = sum(robot_planete(nb_planete, nb_robot, nb_tour2-2))
+        current_sum = sum(robots_replicateurs(nb_planete, nb_robot, nb_tour2))
+        prev_sum = sum(robots_replicateurs(nb_planete, nb_robot, nb_tour2-1))
+        prev_prev_sum = sum(robots_replicateurs(nb_planete, nb_robot, nb_tour2-2))
 
         if current_sum == prev_sum * (nb_planete - 1):
             return "suite géometrique"
