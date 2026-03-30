@@ -1,43 +1,38 @@
 from random import randint
-def robot_planete(nb_planetes:int ,nb_robot:int , nb_tour: int) -> list :
-    """ simulation de l'évolution du nombre de robot """
-    res = [] # resulta
-    res1 =[] # liste = res permetant de creer nouvelle list 
-    surplus = 0  # variable temporaire qui sert  à creer list 
-    loop_tour = 1  # variable temporaire qui sert pour faire repeter boucle pour créer prochaine suite en foction de nb_tour
-    sum_robot = 0  # variable temporaire qui sert de total de robot dans un siècle
+def robot_planete(nb_planetes: int, nb_robots_initiaux: int, nb_siecles: int) -> list:
+    """
+    Simule la répartition des robots sur chaque planète de la galaxie au fil des siècles.        list: Une liste représentant le nombre de robots sur chaque planète après `nb_siecles`.
+    """
+    # Répartition initiale des robots
+    galaxie = []
+    robots_restants = nb_robots_initiaux
 
-    if (nb_robot > 1) and (nb_robot > nb_planetes)  :
-        surplus = nb_robot - nb_planetes
-        res.append(surplus+1)
-        surplus = surplus +1
-        #print(res)
-        #print(surplus)
-    while ( surplus != nb_robot) :
-            res.append(1)
-            surplus = surplus +1   
-            #print(res)
-            #print(surplus)
+    # Répartit les robots en surplus
+    if nb_robots_initiaux > nb_planetes:
+        robots_restants = nb_robots_initiaux - nb_planetes
+        galaxie.append(robots_restants + 1)
+        robots_restants += 1
 
-    while len(res) < nb_planetes:
-        res.append(0)
-        #print(res)
-        
-    while ( loop_tour < nb_tour ) :
-        #print(loop_tour)
-        sum_robot = sum(res)
-        loop_tour = loop_tour+1 
-        for elt in res :
-            res1.append(sum_robot-elt)
-        res = res1
-        res1 = []
-    #print(sum(res))
-    return res 
+    # Ajouter un robot sur chaque planète restante
+    while robots_restants < nb_robots_initiaux:
+        galaxie.append(1)
+        robots_restants += 1
+
+    while len(galaxie) < nb_planetes:
+        galaxie.append(0)
+
+    # Simulation sur plusieurs siècles
+    for siecle in range(1, nb_siecles):
+        total_robots = sum(galaxie)
+
+        # Chaque robot envoie une réplique vers chaque planète puis s'autodétruit
+        galaxie = [total_robots - robots for robots in galaxie]
+
+    return galaxie
 
 def type_suite(nb_planete: int, nb_robot: int) -> str:
     nb_tour2 = 0
-    while nb_tour2 <= 10:
-        nb_tour2 += 1
+    for nb_tour2 in range(1, 11):
         current_sum = sum(robot_planete(nb_planete, nb_robot, nb_tour2))
         prev_sum = sum(robot_planete(nb_planete, nb_robot, nb_tour2-1))
         prev_prev_sum = sum(robot_planete(nb_planete, nb_robot, nb_tour2-2))
@@ -68,5 +63,5 @@ def boucle_test(nb_tour) :
         suite_type = type_suite(x, y)
         if suite_type in actions:
             actions[suite_type]()
-            print(res[-3:])  # Affiche uniquement les trois derniers éléments ajoutés
+            print(res[-3:])
     return res
