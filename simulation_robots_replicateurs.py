@@ -1,5 +1,5 @@
 from random import randint
-def robot_planete(nb_planetes:int ,nb_robot:int , nb_tour: int) -> list :
+def robots_planete(nb_planetes:int ,nb_robot:int , nb_tour: int) -> list :
     """ simulation de l'évolution du nombre de robot """
     res = [] # resulta
     res1 =[] # liste = res permetant de creer nouvelle list 
